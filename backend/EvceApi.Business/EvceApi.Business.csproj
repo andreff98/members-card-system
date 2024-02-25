@@ -10,4 +10,8 @@
     <ProjectReference Include="..\EvceApi.Data\EvceApi.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.2" />
+  </ItemGroup>
+
 </Project>

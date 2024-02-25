@@ -11,6 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddTransient<IUserService,UserService>();
 builder.Services.AddTransient<IUserRepo,UserRepo>();
+builder.Services.AddTransient<IJwtService, JwtService>(provider => new JwtService(
+    builder.Configuration["Jwt:Key"],
+    builder.Configuration["Jwt:Issuer"],
+    builder.Configuration["Jwt:Audience"],
+    provider.GetRequiredService<IUserService>()
+    ));
 
 //Register database
 builder.Services.AddDbContext<EvceContext>(options =>

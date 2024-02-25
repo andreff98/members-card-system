@@ -10,12 +10,13 @@ namespace EvceApi.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]
-public class AuthenticationController(IConfiguration configuration, IUserService userService) : ControllerBase
+public class AuthenticationController(IConfiguration configuration, IUserService userService, IJwtService jwtService) : ControllerBase
 {
     [HttpPost("register")]
     public IActionResult Register()
     {
-        return Ok();
+        var key = jwtService.GenerateJwtToken("andre");
+        return Ok(key);
     }
 
     [HttpPost("login")]
