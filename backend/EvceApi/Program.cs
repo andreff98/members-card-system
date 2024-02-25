@@ -1,10 +1,22 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using EvceApi.Business.Services;
+using EvceApi.Data.Context;
+using EvceApi.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddTransient<IUserService,UserService>();
+builder.Services.AddTransient<IUserRepo,UserRepo>();
+
+//Register database
+builder.Services.AddDbContext<EvceContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:SQLServer"]);
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

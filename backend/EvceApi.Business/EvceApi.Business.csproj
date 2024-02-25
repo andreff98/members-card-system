@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\EvceApi.Data\EvceApi.Data.csproj" />
   </ItemGroup>
 
 </Project>

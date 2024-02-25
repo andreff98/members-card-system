@@ -4,12 +4,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using EvceApi.Business.Services;
 
 namespace EvceApi.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]
-public class AuthenticationController(IConfiguration configuration) : ControllerBase
+public class AuthenticationController(IConfiguration configuration, IUserService userService) : ControllerBase
 {
     [HttpPost("register")]
     public IActionResult Register()
@@ -41,5 +42,19 @@ public class AuthenticationController(IConfiguration configuration) : Controller
         var jwtToken = tokenHandler.WriteToken(token);
 
         return Ok(jwtToken);
+    }
+
+    [HttpGet("users")]
+    public async Task<IActionResult> GetAllUsers()
+    {
+        var users = await userService.GetAllUsersAsync();
+        return Ok(users);
+    }
+    
+    [HttpGet("users/{username}")]
+    public async Task<IActionResult> GetUser([FromHeader]string username)
+    {
+        var users = await userService.GetUserAsync(username);
+        return Ok(users);
     }
 }
